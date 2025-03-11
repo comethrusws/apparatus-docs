@@ -29,17 +29,20 @@ All API requests must be authenticated using your API token:
 <Tabs>
   <TabItem value="curl" label="curl">
     ```bash
-    curl -H "Authorization: Bearer apai_your_token_here" https://api.apparatusai.space/api/user/info
+    curl -X POST "https://app.apparatusai.space/api/forecast" \
+    -H "Authorization: Bearer apai_kf963a9c824e86e8e05861768" \
+    -H "Content-Type: application/json" \
+    -d '{"revenue":[10000, 12000, 15000, 299, 45.25, 120.54, 1000.54]}'
     ```
   </TabItem>
   <TabItem value="js" label="JavaScript">
     ```javascript
-    import { ApparatusClient } from 'apparatus-sdk';
+    const ApparatusAI = require("apparatus-sdk");
     
-    // Initialize the client with your API key
-    const client = new ApparatusClient('apai_your_token_here');
+    // Initialize the SDK with your API Token
+    const ai = new ApparatusAI("apai_your_token_here");
     
-    // All subsequent calls will use this authentication
+    // ⚠️ Note: Ensure your API token starts with apai_, or an error will be thrown.
     ```
   </TabItem>
   <TabItem value="py" label="Python">
@@ -71,13 +74,17 @@ Retrieve information about the current user.
   </TabItem>
   <TabItem value="js" label="JavaScript">
     ```javascript
-    import { ApparatusClient } from 'apparatus-sdk';
+    const ApparatusAI = require("apparatus-sdk");
     
-    const client = new ApparatusClient('apai_your_token_here');
+    const ai = new ApparatusAI("apai_your_token_here");
     
     async function getUserInfo() {
-      const userInfo = await client.user.info();
-      console.log(userInfo);
+      try {
+        const userInfo = await ai.getUserInfo();
+        console.log("User Info:", userInfo);
+      } catch (error) {
+        console.error("Error fetching user info:", error.message);
+      }
     }
     
     getUserInfo();
@@ -133,20 +140,24 @@ Generate predictions based on historical data.
   </TabItem>
   <TabItem value="js" label="JavaScript">
     ```javascript
-    import { ApparatusClient } from 'apparatus-sdk';
+    const ApparatusAI = require("apparatus-sdk");
     
-    const client = new ApparatusClient('apai_your_token_here');
+    const ai = new ApparatusAI("apai_your_token_here");
     
     async function generateForecast() {
-      const forecastData = {
-        revenue: [10000, 12000, 15000],
-        timeframe: "monthly",
-        periods: 3,
-        confidence: 0.95
-      };
-      
-      const forecast = await client.forecast.generate(forecastData);
-      console.log(forecast);
+      try {
+        const forecastData = {
+          revenue: [10000, 12000, 15000],
+          timeframe: "monthly",
+          periods: 3,
+          confidence: 0.95
+        };
+        
+        const forecast = await ai.forecast(forecastData);
+        console.log("Forecast Result:", forecast);
+      } catch (error) {
+        console.error("Forecasting Error:", error.message);
+      }
     }
     
     generateForecast();
@@ -209,20 +220,24 @@ Analyze social media and news trends for specific topics.
   </TabItem>
   <TabItem value="js" label="JavaScript">
     ```javascript
-    import { ApparatusClient } from 'apparatus-sdk';
+    const ApparatusAI = require("apparatus-sdk");
     
-    const client = new ApparatusClient('apai_your_token_here');
+    const ai = new ApparatusAI("apai_your_token_here");
     
     async function analyzeSocialTrends() {
-      const analysisParams = {
-        keyword: "AI Trends",
-        sources: ["twitter", "news", "blogs"],
-        timeframe: "last_30_days",
-        sentiment: true
-      };
-      
-      const analysis = await client.social.analyze(analysisParams);
-      console.log(analysis);
+      try {
+        const analysisParams = {
+          keyword: "AI Trends",
+          sources: ["twitter", "news", "blogs"],
+          timeframe: "last_30_days",
+          sentiment: true
+        };
+        
+        const socialTrends = await ai.analyzeSocialTrends(analysisParams);
+        console.log("Social Trends Analysis:", socialTrends);
+      } catch (error) {
+        console.error("Social Analysis Error:", error.message);
+      }
     }
     
     analyzeSocialTrends();
