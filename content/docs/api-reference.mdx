@@ -1,0 +1,311 @@
+---
+title: API Reference
+description: Comprehensive reference for the ApparatusAI API
+---
+
+import { Tabs, TabItem } from '@/components/Tabs.jsx'
+
+# ApparatusAI API Reference
+
+This is the comprehensive reference for the ApparatusAI API, which provides programmatic access to our forecasting and analysis capabilities.
+
+<img src="/dashboard.png" alt="ApparatusAI Platform" className="rounded-lg" width="800" height="450" />
+
+## Contents
+
+- [Authentication](#authentication)
+- [User Information](#user-information)
+- [Business Forecasting](#business-forecasting)
+- [Social Trend Analysis](#social-trend-analysis)
+- [Error Handling](#error-handling)
+- [Rate Limiting](#rate-limiting)
+
+## Authentication
+
+All API requests must be authenticated using your API token:
+
+**Header**: `Authorization: Bearer apai_xxxxxxxxxx`
+
+<Tabs>
+  <TabItem value="curl" label="curl">
+    ```bash
+    curl -H "Authorization: Bearer apai_your_token_here" https://api.apparatusai.space/api/user/info
+    ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```javascript
+    import { ApparatusClient } from 'apparatus-sdk';
+    
+    // Initialize the client with your API key
+    const client = new ApparatusClient('apai_your_token_here');
+    
+    // All subsequent calls will use this authentication
+    ```
+  </TabItem>
+  <TabItem value="py" label="Python">
+    ```python
+    from apparatus_sdk import ApparatusClient
+    
+    # Initialize the client with your API key
+    client = ApparatusClient('apai_your_token_here')
+    
+    # All subsequent calls will use this authentication
+    ```
+  </TabItem>
+</Tabs>
+
+## User Information
+
+### Get User Info
+
+Retrieve information about the current user.
+
+- **Endpoint**: `/api/user/info`
+- **Method**: GET
+
+<Tabs>
+  <TabItem value="curl" label="curl">
+    ```bash
+    curl -H "Authorization: Bearer apai_your_token_here" https://api.apparatusai.space/api/user/info
+    ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```javascript
+    import { ApparatusClient } from 'apparatus-sdk';
+    
+    const client = new ApparatusClient('apai_your_token_here');
+    
+    async function getUserInfo() {
+      const userInfo = await client.user.info();
+      console.log(userInfo);
+    }
+    
+    getUserInfo();
+    ```
+  </TabItem>
+  <TabItem value="py" label="Python">
+    ```python
+    from apparatus_sdk import ApparatusClient
+    
+    client = ApparatusClient('apai_your_token_here')
+    
+    def get_user_info():
+        user_info = client.user.info()
+        print(user_info)
+    
+    get_user_info()
+    ```
+  </TabItem>
+</Tabs>
+
+**Response**:
+
+```json
+{
+  "id": "user-id",
+  "email": "user@example.com",
+  "tier": "Pro",
+  "usage": {
+    "apiCalls": 250,
+    "limit": 1000
+  }
+}
+```
+
+## Business Forecasting
+
+### Generate Forecast
+
+Generate predictions based on historical data.
+
+- **Endpoint**: `/api/forecast`
+- **Method**: POST
+
+<Tabs>
+  <TabItem value="curl" label="curl">
+    ```bash
+    curl -X POST \
+      -H "Authorization: Bearer apai_your_token_here" \
+      -H "Content-Type: application/json" \
+      -d '{"revenue": [10000, 12000, 15000], "timeframe": "monthly", "periods": 3, "confidence": 0.95}' \
+      https://api.apparatusai.space/api/forecast
+    ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```javascript
+    import { ApparatusClient } from 'apparatus-sdk';
+    
+    const client = new ApparatusClient('apai_your_token_here');
+    
+    async function generateForecast() {
+      const forecastData = {
+        revenue: [10000, 12000, 15000],
+        timeframe: "monthly",
+        periods: 3,
+        confidence: 0.95
+      };
+      
+      const forecast = await client.forecast.generate(forecastData);
+      console.log(forecast);
+    }
+    
+    generateForecast();
+    ```
+  </TabItem>
+  <TabItem value="py" label="Python">
+    ```python
+    from apparatus_sdk import ApparatusClient
+    
+    client = ApparatusClient('apai_your_token_here')
+    
+    def generate_forecast():
+        forecast_data = {
+            "revenue": [10000, 12000, 15000],
+            "timeframe": "monthly",
+            "periods": 3,
+            "confidence": 0.95
+        }
+        
+        forecast = client.forecast.generate(forecast_data)
+        print(forecast)
+    
+    generate_forecast()
+    ```
+  </TabItem>
+</Tabs>
+
+**Response**:
+
+```json
+{
+  "prediction": [14000, 16000, 18000],
+  "confidenceIntervals": {
+    "lower": [13200, 14800, 16500],
+    "upper": [14800, 17200, 19500]
+  },
+  "accuracy": 0.92,
+  "method": "ai_ensemble"
+}
+```
+
+## Social Trend Analysis
+
+### Analyze Social Trends
+
+Analyze social media and news trends for specific topics.
+
+- **Endpoint**: `/api/social-analysis`
+- **Method**: POST
+
+<Tabs>
+  <TabItem value="curl" label="curl">
+    ```bash
+    curl -X POST \
+      -H "Authorization: Bearer apai_your_token_here" \
+      -H "Content-Type: application/json" \
+      -d '{"keyword": "AI Trends", "sources": ["twitter", "news", "blogs"], "timeframe": "last_30_days", "sentiment": true}' \
+      https://api.apparatusai.space/api/social-analysis
+    ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```javascript
+    import { ApparatusClient } from 'apparatus-sdk';
+    
+    const client = new ApparatusClient('apai_your_token_here');
+    
+    async function analyzeSocialTrends() {
+      const analysisParams = {
+        keyword: "AI Trends",
+        sources: ["twitter", "news", "blogs"],
+        timeframe: "last_30_days",
+        sentiment: true
+      };
+      
+      const analysis = await client.social.analyze(analysisParams);
+      console.log(analysis);
+    }
+    
+    analyzeSocialTrends();
+    ```
+  </TabItem>
+  <TabItem value="py" label="Python">
+    ```python
+    from apparatus_sdk import ApparatusClient
+    
+    client = ApparatusClient('apai_your_token_here')
+    
+    def analyze_social_trends():
+        analysis_params = {
+            "keyword": "AI Trends",
+            "sources": ["twitter", "news", "blogs"],
+            "timeframe": "last_30_days",
+            "sentiment": True
+        }
+        
+        analysis = client.social.analyze(analysis_params)
+        print(analysis)
+    
+    analyze_social_trends()
+    ```
+  </TabItem>
+</Tabs>
+
+**Response**:
+
+```json
+{
+  "trendScore": 89,
+  "mentions": 10500,
+  "sentiment": {
+    "positive": 65,
+    "neutral": 25,
+    "negative": 10
+  },
+  "topSources": [
+    {"source": "Twitter", "mentions": 6200},
+    {"source": "News", "mentions": 2800},
+    {"source": "Blogs", "mentions": 1500}
+  ]
+}
+```
+
+## Error Handling
+
+If an API request fails, the response will contain an error object:
+
+```json
+{
+  "error": {
+    "code": 401,
+    "message": "Unauthorized: Invalid API token",
+    "details": {
+      "reason": "expired_token"
+    }
+  }
+}
+```
+
+### Common Errors
+
+| Error Code | Message | Description |
+|------------|---------|-------------|
+| 401 | Unauthorized | Invalid or missing API token |
+| 403 | Forbidden | Insufficient permissions |
+| 404 | Not Found | The requested endpoint doesn't exist |
+| 422 | Validation Failed | Invalid parameters provided |
+| 429 | Rate Limit Exceeded | Too many requests |
+| 500 | Internal Server Error | An unexpected issue occurred |
+
+## Rate Limiting
+
+API requests are subject to rate limits based on your subscription plan:
+
+- **Basic**: 100 requests per hour
+- **Pro**: 1,000 requests per hour
+- **Enterprise**: Custom limits
+
+
+import { AlertBanner } from '@/components/AlertBanner'
+
+<AlertBanner />
+

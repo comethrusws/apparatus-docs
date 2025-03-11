@@ -1,0 +1,111 @@
+---
+title: SDK Usage
+description: How to use the ApparatusAI SDK
+---
+
+# Using the ApparatusAI SDK
+
+The ApparatusAI SDK provides a simple way to integrate our powerful forecasting and analysis capabilities directly into your applications.
+
+## Installation
+
+Install the SDK via npm:
+
+```bash
+npm install apparatus-sdk
+```
+
+Or using yarn:
+
+```bash
+yarn add apparatus-sdk
+```
+
+## Import and Initialize
+
+First, import and initialize the SDK with your API token:
+
+```javascript
+const ApparatusAI = require("apparatus-sdk");
+const api = new ApparatusAI("apai_your_api_token_here");
+```
+
+If you're using ES modules:
+
+```javascript
+import ApparatusAI from "apparatus-sdk";
+const api = new ApparatusAI("apai_your_api_token_here");
+```
+
+## Basic Usage Examples
+
+### Fetch User Information
+
+Retrieve information about the current user:
+
+```javascript
+api.getUserInfo()
+  .then(data => console.log("User Info:", data))
+  .catch(error => console.error("Error fetching user info:", error.message));
+```
+
+### Perform Business Forecasting
+
+Generate forecasts based on historical data:
+
+```javascript
+api.forecast({
+  revenue: [10000, 12000, 15000],
+  timeframe: "monthly",
+  periods: 3
+})
+  .then(data => console.log("Forecast Result:", data))
+  .catch(error => console.error("Forecasting Error:", error.message));
+```
+
+### Analyze Social Trends
+
+Get insights on market trends based on social data:
+
+```javascript
+api.analyzeSocialTrends({
+  keyword: "AI Trends",
+  sources: ["twitter", "news", "blogs"],
+  timeframe: "last_30_days"
+})
+  .then(data => console.log("Social Trends Analysis:", data))
+  .catch(error => console.error("Social Analysis Error:", error.message));
+```
+
+## Advanced Configuration
+
+You can configure the SDK with additional options:
+
+```javascript
+const api = new ApparatusAI("apai_your_api_token_here", {
+  timeout: 30000, // 30 seconds
+  baseUrl: "https://api.custom-domain.apparatusai.space",
+  debug: true
+});
+```
+
+## Error Handling
+
+The SDK uses a consistent error handling pattern:
+
+```javascript
+try {
+  const forecast = await api.forecast({
+    revenue: [10000, 12000, 15000]
+  });
+  console.log("Success:", forecast);
+} catch (error) {
+  console.error("Error Code:", error.code);
+  console.error("Error Message:", error.message);
+  console.error("Error Details:", error.details);
+}
+```
+
+## Complete SDK Reference
+
+For a full list of available methods and options, check out our [SDK Reference Guide](https://github.com/apparatusai/apparatus-sdk).
