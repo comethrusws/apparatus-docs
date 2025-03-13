@@ -69,7 +69,7 @@ Retrieve information about the current user.
 <Tabs>
   <TabItem value="curl" label="curl">
     ```bash
-    curl -H "Authorization: Bearer apai_your_token_here" https://api.apparatusai.space/api/user/info
+    curl -H "Authorization: Bearer apai_your_token_here" https://app.apparatusai.space/api/user/info
     ```
   </TabItem>
   <TabItem value="js" label="JavaScript">
@@ -92,15 +92,16 @@ Retrieve information about the current user.
   </TabItem>
   <TabItem value="py" label="Python">
     ```python
-    from apparatus_sdk import ApparatusClient
-    
-    client = ApparatusClient('apai_your_token_here')
-    
+    from apparatusai import ApparatusAI
+
+    client = ApparatusAI('apai_your_token_here')
+
     def get_user_info():
-        user_info = client.user.info()
-        print(user_info)
-    
+      user_info = client.get_user_info()
+      print(user_info)
+
     get_user_info()
+
     ```
   </TabItem>
 </Tabs>
@@ -135,7 +136,7 @@ Generate predictions based on historical data.
       -H "Authorization: Bearer apai_your_token_here" \
       -H "Content-Type: application/json" \
       -d '{"revenue": [10000, 12000, 15000], "timeframe": "monthly", "periods": 3, "confidence": 0.95}' \
-      https://api.apparatusai.space/api/forecast
+      https://app.apparatusai.space/api/forecast
     ```
   </TabItem>
   <TabItem value="js" label="JavaScript">
@@ -165,20 +166,20 @@ Generate predictions based on historical data.
   </TabItem>
   <TabItem value="py" label="Python">
     ```python
-    from apparatus_sdk import ApparatusClient
+    from apparatusai import ApparatusAI
     
-    client = ApparatusClient('apai_your_token_here')
+    client = ApparatusAI('apai_your_token_here')
     
     def generate_forecast():
-        forecast_data = {
-            "revenue": [10000, 12000, 15000],
-            "timeframe": "monthly",
-            "periods": 3,
-            "confidence": 0.95
-        }
-        
-        forecast = client.forecast.generate(forecast_data)
-        print(forecast)
+    forecast_data = {
+        "revenue": [10000, 12000, 15000],
+        "timeframe": "monthly",
+        "periods": 3,
+        "confidence": 0.95
+    }
+    
+    forecast = client.generate_forecast(forecast_data)
+    print(forecast)
     
     generate_forecast()
     ```
@@ -215,7 +216,7 @@ Analyze social media and news trends for specific topics.
       -H "Authorization: Bearer apai_your_token_here" \
       -H "Content-Type: application/json" \
       -d '{"keyword": "AI Trends", "sources": ["twitter", "news", "blogs"], "timeframe": "last_30_days", "sentiment": true}' \
-      https://api.apparatusai.space/api/social-analysis
+      https://app.apparatusai.space/api/social-analysis
     ```
   </TabItem>
   <TabItem value="js" label="JavaScript">
@@ -245,10 +246,10 @@ Analyze social media and news trends for specific topics.
   </TabItem>
   <TabItem value="py" label="Python">
     ```python
-    from apparatus_sdk import ApparatusClient
-    
-    client = ApparatusClient('apai_your_token_here')
-    
+    from apparatusai import ApparatusAI
+
+    client = ApparatusAI('apai_your_token_here')
+
     def analyze_social_trends():
         analysis_params = {
             "keyword": "AI Trends",
@@ -257,9 +258,9 @@ Analyze social media and news trends for specific topics.
             "sentiment": True
         }
         
-        analysis = client.social.analyze(analysis_params)
-        print(analysis)
-    
+    analysis = client.analyze_social_trends(analysis_params)
+    print(analysis)
+
     analyze_social_trends()
     ```
   </TabItem>
